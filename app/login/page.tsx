@@ -143,7 +143,7 @@ export default function LoginPage() {
               onClick={() => { setIsSignUp(!isSignUp); setError(''); setMessage('') }}
               className="text-sm text-brand-600 hover:text-brand-700 font-medium"
             >
-              /*{isSignUp
+              {isSignUp
                 ? '← Já tenho conta, quero entrar'
                 : 'Ainda não tenho conta → Criar agora'}
             </button>
