@@ -1,76 +1,268 @@
-# 🛫 ImigraContas — Dashboard de Gastos 🇧🇷 → 🇪🇸
+# 🛫 Rumbo +34
 
-Dashboard colaborativo em tempo real para controlar todos os gastos da imigração Brasil → Espanha (2 adultos + 1 cachorro 🐕).
+> **A collaborative dashboard to track every expense involved in moving from Brazil 🇧🇷 to Spain 🇪🇸.**
+> Built for couples planning their immigration journey together, with real-time synchronization, multi-currency support, and detailed financial insights.
 
-## ✨ Funcionalidades
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-14-black?logo=nextdotjs" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white" />
+  <img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vercel-Deploy-black?logo=vercel" />
+  <img src="https://img.shields.io/badge/License-MIT-blue" />
+</p>
 
-- 📊 **Dashboard** com KPIs, totais por fase e por pessoa
-- 📋 **Tabela de gastos** com filtros por fase, categoria, cachorro e busca
-- 📈 **Gráficos** de pizza, barras e linha temporal
-- 🔴 **Presença ao vivo** — veja quem está online em tempo real
-- 🔔 **Notificações** quando o cônjuge adiciona um gasto
-- 🐕 **Filtro cachorro** — separe os gastos do pet
-- 💰 **Múltiplas moedas** — R$ e € na mesma interface
-- 📱 **Responsivo** — funciona no celular
+---
 
-## 🚀 Como fazer o deploy
+## 🌍 Live Demo
 
-### 1. Criar banco no Supabase (grátis)
+🔗 **Application:** https://your-project.vercel.app
 
-1. Acesse [app.supabase.com](https://app.supabase.com) e crie um projeto
-2. Vá em **SQL Editor** e cole todo o conteúdo de `supabase-migration.sql`
-3. Execute o SQL (cria todas as tabelas, categorias e configurações)
-4. Vá em **Settings → API** e copie:
-   - `Project URL` → `NEXT_PUBLIC_SUPABASE_URL`
-   - `anon public` key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+> Replace with your Vercel URL.
 
-### 2. Deploy na Vercel
+---
 
-1. Faça upload desse projeto no GitHub
-2. Acesse [vercel.com](https://vercel.com) → **New Project** → importe o repositório
-3. Em **Environment Variables**, adicione:
-   ```
-   NEXT_PUBLIC_SUPABASE_URL = sua_url_do_supabase
-   NEXT_PUBLIC_SUPABASE_ANON_KEY = sua_anon_key
-   ```
-4. Clique em **Deploy** ✅
+## 📸 Preview
 
-### 3. Criar contas
+### Dashboard
 
-1. Acesse a URL da Vercel
-2. **Você** cria uma conta com seu e-mail
-3. **Sua esposa** cria uma conta com o e-mail dela
-4. Ambos veem todos os gastos em tempo real! 🎉
+<p align="center">
+  <img src="./docs/dashboard.png" width="900">
+</p>
 
-## 🗂 Fases da Imigração
+### Expense Management
 
-| Fase | Descrição |
-|------|-----------|
-| 🔵 Pré-Viagem | Documentação, passagens, preparativos no Brasil |
-| 🟡 Durante Viagem | Gastos durante o trajeto |
-| 🟣 Chegada | Primeiros dias na Espanha |
-| 🟢 Pós-Chegada | Moradia, regularização, adaptação |
+<p align="center">
+  <img src="./docs/expenses.png" width="900">
+</p>
 
-## 📦 Categorias Incluídas
+> Replace the images with screenshots of your application.
 
-✈️ Passagens · 🏠 Hospedagem · 🍽️ Alimentação · 📄 Documentação · 🐕 Pet · 💊 Saúde · 🚗 Transporte · 📦 Bagagem · 👕 Roupas · 💻 Eletrônicos · 🏛️ Taxas Consulado · 📚 Cursos · 🛡️ Seguro · 🏙️ Moradia Espanha · 💰 Outros
+---
 
-## 🔧 Desenvolvimento local
+# ✨ Features
+
+## 📊 Dashboard
+
+* KPIs
+* Total expenses
+* Expenses by immigration stage
+* Expenses by person
+* Monthly evolution
+* Remaining budget
+
+## 📋 Expense Management
+
+* Add
+* Edit
+* Delete
+* Search
+* Advanced filters
+* Categories
+* Immigration stages
+
+## 📈 Analytics
+
+* Pie Chart
+* Bar Chart
+* Timeline
+* Expense distribution
+
+## 👥 Collaboration
+
+* Real-time synchronization
+* Live Presence
+* Instant notifications
+* Two-user collaboration
+
+## 💰 Financial Features
+
+* BRL (R$)
+* EUR (€)
+* Automatic totals
+* Currency separation
+
+## 🐕
+
+* Separate pet expenses
+* Dedicated filters
+
+## 🌐 User Experience
+
+* Responsive Design
+* Dark Mode
+* Portuguese
+* Spanish
+* Mobile Friendly
+
+## 🔐 Authentication
+
+* Email & Password
+* Email Verification
+* Gmail SMTP
+* Protected Routes
+* Maximum of two users
+
+---
+
+# 🗂 Immigration Stages
+
+| Stage              | Description                                      |
+| ------------------ | ------------------------------------------------ |
+| 🔵 Pre-Departure   | Documentation, flights and preparation in Brazil |
+| 🟡 During the Trip | Travel expenses                                  |
+| 🟣 Arrival         | First days in Spain                              |
+| 🟢 Post-Arrival    | Housing, paperwork and settlement                |
+
+---
+
+# 📦 Expense Categories
+
+* ✈️ Flights
+* 🏠 Accommodation
+* 🍽️ Food
+* 📄 Documentation
+* 🐕 Pet
+* 💊 Healthcare
+* 🚗 Transportation
+* 📦 Luggage
+* 👕 Clothing
+* 💻 Electronics
+* 🏛️ Consular Fees
+* 📚 Courses
+* 🛡️ Insurance
+* 🏙️ Housing
+* 💰 Others
+
+---
+
+# 🛠 Tech Stack
+
+| Technology   | Description                          |
+| ------------ | ------------------------------------ |
+| Next.js 14   | React Framework (App Router)         |
+| React 19     | Frontend                             |
+| TypeScript   | Language                             |
+| Tailwind CSS | Styling                              |
+| Supabase     | Authentication + Database + Realtime |
+| PostgreSQL   | Database                             |
+| Recharts     | Charts                               |
+| Vercel       | Hosting                              |
+
+---
+
+# ⚙️ Installation
+
+Clone the repository:
 
 ```bash
-cp .env.local.example .env.local
-# Edite .env.local com suas credenciais Supabase
+git clone https://github.com/your-user/rumbo-34.git
+```
 
+Go to the project folder:
+
+```bash
+cd rumbo-34
+```
+
+Install dependencies:
+
+```bash
 npm install
+```
+
+Run the development server:
+
+```bash
 npm run dev
 ```
 
-Acesse `http://localhost:3000`
+Open:
 
-## 🛠 Stack Tecnológica
+```
+http://localhost:3000
+```
 
-- **Next.js 14** (App Router) — Framework React
-- **Supabase** — PostgreSQL + Realtime + Auth
-- **Tailwind CSS** — Estilização
-- **Recharts** — Gráficos
-- **Vercel** — Deploy
+---
+
+# 🔑 Environment Variables
+
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
+
+---
+
+# ⚙️ Supabase Configuration
+
+After creating the project in Supabase:
+
+* Enable **Authentication**.
+* Configure **Email Authentication**.
+* Disable public sign-ups if you want only two approved users.
+* Configure Gmail SMTP.
+* Enable Realtime.
+* Create the required PostgreSQL tables.
+
+---
+
+# 📁 Project Structure
+
+```
+rumbo-34/
+│
+├── app/
+├── components/
+├── hooks/
+├── lib/
+├── public/
+├── styles/
+├── docs/
+│   ├── dashboard.png
+│   └── expenses.png
+├── supabase/
+├── README.md
+└── package.json
+```
+
+---
+
+# 🗺️ Roadmap
+
+## Completed
+
+* [x] Dashboard
+* [x] Authentication
+* [x] Real-time Sync
+* [x] Notifications
+* [x] Multi-language
+* [x] Responsive Layout
+* [x] Pet Expenses
+* [x] Charts
+* [x] Gmail SMTP
+
+## Planned
+
+* [ ] Budget planning
+* [ ] Savings goal
+* [ ] PDF reports
+* [ ] Excel export
+* [ ] Expense attachments
+* [ ] Exchange rate history
+* [ ] Progressive Web App (PWA)
+* [ ] Mobile App
+
+---
+
+# 📜 License
+
+This project is licensed under the MIT License.
+
+Feel free to use, modify and contribute according to the license terms.
