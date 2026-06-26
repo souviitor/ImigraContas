@@ -17,15 +17,16 @@
 
 ## 🌍 Live Demo
 
-🔗 **Application:** https://your-project.vercel.app
+🔗 **Application:** https://rumbo34.vercel.app/
 
-> Replace with your Vercel URL
 
 ---
 
 ## 📸 Preview
+![alt text](img/image.png)
 
 ### Dashboard
+![alt text](img/image-1.png)
 
 <p align="center">
   <img src="./docs/dashboard.png" width="900">
@@ -36,8 +37,6 @@
 <p align="center">
   <img src="./docs/expenses.png" width="900">
 </p>
-
-> Replace the images with screenshots of your application.
 
 ---
 
@@ -259,10 +258,3 @@ rumbo-34/
 * [ ] Progressive Web App (PWA)
 * [ ] Mobile App
 
----
-
-# 📜 License
-
-This project is licensed under the MIT License.
-
-Feel free to use, modify and contribute according to the license terms.
