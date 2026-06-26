@@ -60,7 +60,7 @@ export default function LoginPage() {
           <div className="text-6xl mb-4">🛫</div>
           <h1 className="text-3xl font-bold text-white mb-2">ImigraContas</h1>
           <p className="text-slate-400 text-sm">
-            🇧🇷 Brasil → Espanha 🇪🇸 · Dois adultos + 1 cachorro 🐕
+            🇧🇷 Brasil → Espanha 🇪🇸
           </p>
           <div className="flex items-center justify-center gap-2 mt-3">
             <span className="text-2xl">🇧🇷</span>
