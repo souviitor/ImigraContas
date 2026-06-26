@@ -151,7 +151,7 @@ export default function LoginPage() {
 
           {!isSignUp && (
             <p className="mt-4 text-xs text-slate-400 text-center">
-              💡 Você e sua esposa devem criar contas separadas com e-mails diferentes. Todos os gastos são visíveis para ambos em tempo real.
+              💡 
             </p>
           )}
         </div>
