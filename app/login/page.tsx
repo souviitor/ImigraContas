@@ -144,8 +144,8 @@ export default function LoginPage() {
               className="text-sm text-brand-600 hover:text-brand-700 font-medium"
             >
               {isSignUp
-                ? '🚀 Não tenho conta → Criar conta'
-                : '🚀 Já tenho conta → Entrar'}
+                ? '🚀 Já tenho conta → Entrar'
+                : '🚀 Não tenho conta → Criar conta'}
             </button>
           </div>
 
