@@ -28,16 +28,6 @@
 ### Dashboard
 ![alt text](img/image-1.png)
 
-<p align="center">
-  <img src="./docs/dashboard.png" width="900">
-</p>
-
-### Expense Management
-
-<p align="center">
-  <img src="./docs/expenses.png" width="900">
-</p>
-
 ---
 
 # ✨ Features
