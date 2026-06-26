@@ -19,7 +19,7 @@
 
 🔗 **Application:** https://your-project.vercel.app
 
-> Replace with your Vercel URL.
+> Replace with your Vercel URL
 
 ---
 
