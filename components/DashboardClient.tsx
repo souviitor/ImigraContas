@@ -9,6 +9,7 @@ import ExpenseTable from './ExpenseTable'
 import AddExpenseModal from './AddExpenseModal'
 import ChartsPanel from './ChartsPanel'
 import { formatBRL, formatEUR } from '@/lib/utils'
+import { useLanguage } from '@/lib/LanguageContext'
 
 type Props = {
   initialExpenses: ExpenseWithDetails[]
@@ -37,6 +38,7 @@ export default function DashboardClient({
   const [showAddModal, setShowAddModal] = useState(false)
   const [notification, setNotification] = useState<string | null>(null)
   const supabase = createClient()
+  const { t } = useLanguage()
 
   const showNotification = useCallback((msg: string) => {
     setNotification(msg)
@@ -56,7 +58,7 @@ export default function DashboardClient({
             .single()
           if (data && data.user_id !== currentUserId) {
             setExpenses(prev => [data as ExpenseWithDetails, ...prev])
-            showNotification(`💰 ${data.profiles?.name || 'Alguém'} adicionou: ${data.description}`)
+            showNotification(`💰 ${data.profiles?.name || 'Alguém'} ${t('alguemAdicionou')}: ${data.description}`)
           }
         }
       )
@@ -114,7 +116,7 @@ export default function DashboardClient({
     if (!error && data) {
       setExpenses(prev => [data as ExpenseWithDetails, ...prev])
       setShowAddModal(false)
-      showNotification('✅ Gasto adicionado com sucesso!')
+      showNotification(t('gastoAdicionado'))
     }
     return { error }
   }
@@ -149,12 +151,12 @@ export default function DashboardClient({
         <div className="sticky top-0 z-10 bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-xl font-bold text-slate-800">
-              {activeView === 'overview' && '📊 Visão Geral'}
-              {activeView === 'expenses' && '📋 Todos os Gastos'}
-              {activeView === 'charts' && '📈 Gráficos e Análises'}
+              {activeView === 'overview' && '📊 ' + t('visaoGeral')}
+              {activeView === 'expenses' && t('todosOsGastos')}
+              {activeView === 'charts' && t('graficosAnalises')}
             </h1>
             <p className="text-sm text-slate-500">
-              {expenses.length} gasto{expenses.length !== 1 ? 's' : ''} registrado{expenses.length !== 1 ? 's' : ''}
+              {expenses.length} {expenses.length !== 1 ? t('registros') : t('registro')} {expenses.length !== 1 ? t('registrados') : t('registrado')}
             </p>
           </div>
 
@@ -185,7 +187,7 @@ export default function DashboardClient({
               onClick={() => setShowAddModal(true)}
               className="btn-primary flex items-center gap-2"
             >
-              <span className="text-lg">+</span> Novo Gasto
+              <span className="text-lg">+</span> {t('novoGasto')}
             </button>
           </div>
         </div>

@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { LanguageProvider } from '@/lib/LanguageContext'
 
 export const metadata: Metadata = {
-  title: 'ImigraContas 🇧🇷→🇪🇸 | Controle de Gastos',
+  title: 'Rumbo +34 🇧🇷→🇪🇸 | Controle de Gastos',
   description: 'Dashboard de controle de gastos da imigração Brasil → Espanha',
 }
 
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="min-h-screen bg-slate-50 antialiased">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   )

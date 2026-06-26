@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { Profile } from '@/lib/types'
 import { ActiveView } from './DashboardClient'
 import { formatBRL, formatEUR } from '@/lib/utils'
+import { useLanguage } from '@/lib/LanguageContext'
+import LanguageSwitcher from './LanguageSwitcher'
 
 type Props = {
   currentProfile: Profile | null
@@ -29,6 +31,7 @@ export default function Sidebar({
 }: Props) {
   const router = useRouter()
   const supabase = createClient()
+  const { t } = useLanguage()
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
@@ -36,10 +39,10 @@ export default function Sidebar({
     router.refresh()
   }
 
-  const navItems: { id: ActiveView; label: string; icon: string }[] = [
-    { id: 'overview', label: 'Visão Geral', icon: '📊' },
-    { id: 'expenses', label: 'Gastos', icon: '📋' },
-    { id: 'charts', label: 'Gráficos', icon: '📈' },
+  const navItems: { id: ActiveView; labelKey: 'visaoGeral' | 'gastos' | 'graficos'; icon: string }[] = [
+    { id: 'overview', labelKey: 'visaoGeral', icon: '📊' },
+    { id: 'expenses', labelKey: 'gastos', icon: '📋' },
+    { id: 'charts', labelKey: 'graficos', icon: '📈' },
   ]
 
   return (
@@ -53,12 +56,16 @@ export default function Sidebar({
             <p className="text-slate-400 text-xs">🇧🇷 → 🇪🇸</p>
           </div>
         </div>
+        {/* Language Switcher */}
+        <div className="mt-3">
+          <LanguageSwitcher />
+        </div>
       </div>
 
       {/* Quem está online */}
       <div className="px-4 py-3 border-b border-slate-700">
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-          Família Online
+          {t('familiaOnline')}
         </p>
         <div className="space-y-2">
           {profiles.map(p => (
@@ -80,11 +87,11 @@ export default function Sidebar({
                 <p className="text-sm font-medium text-white">
                   {p.name}
                   {p.id === currentProfile?.id && (
-                    <span className="text-slate-400 text-xs ml-1">(você)</span>
+                    <span className="text-slate-400 text-xs ml-1">{t('voce')}</span>
                   )}
                 </p>
                 <p className={`text-xs ${onlineUsers.includes(p.id) ? 'text-emerald-400' : 'text-slate-500'}`}>
-                  {onlineUsers.includes(p.id) ? '● Online agora' : '○ Offline'}
+                  {onlineUsers.includes(p.id) ? `● ${t('online')}` : `○ ${t('offline')}`}
                 </p>
               </div>
             </div>
@@ -95,15 +102,15 @@ export default function Sidebar({
       {/* Totais rápidos */}
       <div className="px-4 py-3 border-b border-slate-700">
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-          Total Gasto
+          {t('totalGasto')}
         </p>
         <div className="space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-xs text-slate-400">Em R$</span>
+            <span className="text-xs text-slate-400">{t('emReais')}</span>
             <span className="text-sm font-bold text-white">{formatBRL(totalBRL)}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-slate-400">Em €</span>
+            <span className="text-xs text-slate-400">{t('emEuros')}</span>
             <span className="text-sm font-bold text-spain-yellow">{formatEUR(totalEUR)}</span>
           </div>
         </div>
@@ -112,7 +119,7 @@ export default function Sidebar({
       {/* Navegação */}
       <nav className="flex-1 p-4">
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
-          Menu
+          {t('menu')}
         </p>
         <div className="space-y-1">
           {navItems.map(item => (
@@ -126,7 +133,7 @@ export default function Sidebar({
               }`}
             >
               <span className="text-base">{item.icon}</span>
-              {item.label}
+              {t(item.labelKey)}
             </button>
           ))}
         </div>
@@ -137,7 +144,7 @@ export default function Sidebar({
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium bg-brand-600 hover:bg-brand-500 text-white transition-all"
           >
             <span className="text-lg">+</span>
-            Adicionar Gasto
+            {t('adicionarGasto')}
           </button>
         </div>
       </nav>
@@ -160,7 +167,7 @@ export default function Sidebar({
           onClick={handleLogout}
           className="w-full text-xs text-slate-400 hover:text-white transition-colors py-1.5 rounded-lg hover:bg-slate-800"
         >
-          → Sair
+          {t('sair')}
         </button>
       </div>
     </aside>

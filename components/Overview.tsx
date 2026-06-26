@@ -2,6 +2,7 @@
 
 import { ExpenseWithDetails, Category, Profile } from '@/lib/types'
 import { formatBRL, formatEUR, formatDate, PHASE_LABELS } from '@/lib/utils'
+import { useLanguage } from '@/lib/LanguageContext'
 
 type Props = {
   expenses: ExpenseWithDetails[]
@@ -14,13 +15,21 @@ type Props = {
 }
 
 export default function Overview({ expenses, profiles, budget, totalBRL, totalEUR, onViewAll, onAddExpense }: Props) {
+  const { t } = useLanguage()
   const dogExpenses = expenses.filter(e => e.is_for_dog)
   const totalDog = dogExpenses.reduce((s, e) => s + (e.currency === 'BRL' ? e.amount_brl : 0), 0)
+
+  const phaseLabels: Record<string, string> = {
+    pre_viagem: t('preViagem'),
+    viagem: t('duranteViagem'),
+    chegada: t('chegada'),
+    pos_chegada: t('posChegada'),
+  }
 
   const byPhase = Object.entries(PHASE_LABELS).map(([phase, meta]) => {
     const phaseExpenses = expenses.filter(e => e.phase === phase)
     const total = phaseExpenses.reduce((s, e) => s + (e.currency === 'BRL' ? e.amount_brl : e.amount_brl), 0)
-    return { phase, ...meta, total, count: phaseExpenses.length }
+    return { phase, ...meta, label: phaseLabels[phase] || meta.label, total, count: phaseExpenses.length }
   })
 
   const byPerson = profiles.map(p => {
@@ -38,27 +47,27 @@ export default function Overview({ expenses, profiles, budget, totalBRL, totalEU
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="card bg-gradient-to-br from-brand-600 to-brand-700 text-white border-0">
-          <p className="text-brand-200 text-xs font-semibold uppercase tracking-wider mb-1">Total em R$</p>
+          <p className="text-brand-200 text-xs font-semibold uppercase tracking-wider mb-1">{t('totalEmReais')}</p>
           <p className="text-2xl font-bold">{formatBRL(totalBRL)}</p>
-          <p className="text-brand-200 text-xs mt-1">{expenses.filter(e=>e.currency==='BRL').length} registros</p>
+          <p className="text-brand-200 text-xs mt-1">{expenses.filter(e=>e.currency==='BRL').length} {t('registros')}</p>
         </div>
 
         <div className="card bg-gradient-to-br from-amber-400 to-amber-500 text-white border-0">
-          <p className="text-amber-100 text-xs font-semibold uppercase tracking-wider mb-1">Total em €</p>
+          <p className="text-amber-100 text-xs font-semibold uppercase tracking-wider mb-1">{t('totalEmEuros')}</p>
           <p className="text-2xl font-bold">{formatEUR(totalEUR)}</p>
-          <p className="text-amber-100 text-xs mt-1">{expenses.filter(e=>e.currency==='EUR').length} registros</p>
+          <p className="text-amber-100 text-xs mt-1">{expenses.filter(e=>e.currency==='EUR').length} {t('registros')}</p>
         </div>
 
         <div className="card bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-0">
-          <p className="text-emerald-100 text-xs font-semibold uppercase tracking-wider mb-1">Gastos do Bidu 🐕</p>
+          <p className="text-emerald-100 text-xs font-semibold uppercase tracking-wider mb-1">{t('gastosDoBidu')}</p>
           <p className="text-2xl font-bold">{formatBRL(totalDog)}</p>
-          <p className="text-emerald-100 text-xs mt-1">{dogExpenses.length} registros</p>
+          <p className="text-emerald-100 text-xs mt-1">{dogExpenses.length} {t('registros')}</p>
         </div>
 
         <div className="card">
-          <p className="label">Total de Registros</p>
+          <p className="label">{t('totalDeRegistros')}</p>
           <p className="text-2xl font-bold text-slate-800">{expenses.length}</p>
-          <p className="text-slate-400 text-xs mt-1">por {profiles.length} pessoas</p>
+          <p className="text-slate-400 text-xs mt-1">× {profiles.length}</p>
         </div>
       </div>
 
@@ -67,13 +76,13 @@ export default function Overview({ expenses, profiles, budget, totalBRL, totalEU
         <div className="card">
           <div className="flex justify-between items-center mb-3">
             <div>
-              <p className="font-semibold text-slate-800">Orçamento Total</p>
-              <p className="text-sm text-slate-500">Meta: {formatBRL(budget.total_brl)}</p>
+              <p className="font-semibold text-slate-800">{t('orcamento')}</p>
+              <p className="text-sm text-slate-500">{formatBRL(budget.total_brl)}</p>
             </div>
             <div className="text-right">
               <p className="text-lg font-bold text-slate-800">{formatBRL(totalBRL)}</p>
               <p className={`text-sm font-medium ${budgetPctBRL > 90 ? 'text-red-500' : budgetPctBRL > 70 ? 'text-amber-500' : 'text-emerald-500'}`}>
-                {budgetPctBRL.toFixed(1)}% utilizado
+                {budgetPctBRL.toFixed(1)}% {t('usado')}
               </p>
             </div>
           </div>
@@ -85,22 +94,19 @@ export default function Overview({ expenses, profiles, budget, totalBRL, totalEU
               style={{ width: `${Math.min(budgetPctBRL, 100)}%` }}
             />
           </div>
-          <p className="text-xs text-slate-400 mt-2">
-            Disponível: {formatBRL(Math.max(0, budget.total_brl - totalBRL))}
-          </p>
         </div>
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Por Fase */}
         <div className="card">
-          <h3 className="font-semibold text-slate-800 mb-4">Por Fase da Imigração</h3>
+          <h3 className="font-semibold text-slate-800 mb-4">{t('gastoPorFase')}</h3>
           <div className="space-y-3">
             {byPhase.map(p => (
               <div key={p.phase} className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className={`phase-badge ${p.bg} ${p.color}`}>{p.label}</span>
-                  <span className="text-xs text-slate-400">{p.count} itens</span>
+                  <span className="text-xs text-slate-400">{p.count}</span>
                 </div>
                 <span className="font-semibold text-slate-800 text-sm">{formatBRL(p.total)}</span>
               </div>
@@ -110,7 +116,7 @@ export default function Overview({ expenses, profiles, budget, totalBRL, totalEU
 
         {/* Por Pessoa */}
         <div className="card">
-          <h3 className="font-semibold text-slate-800 mb-4">Por Pessoa</h3>
+          <h3 className="font-semibold text-slate-800 mb-4">{t('gastoPorPessoa')}</h3>
           <div className="space-y-4">
             {byPerson.map(p => (
               <div key={p.id}>
@@ -123,7 +129,7 @@ export default function Overview({ expenses, profiles, budget, totalBRL, totalEU
                       {p.name.charAt(0)}
                     </div>
                     <span className="text-sm font-medium text-slate-700">{p.name}</span>
-                    <span className="text-xs text-slate-400">{p.count} itens</span>
+                    <span className="text-xs text-slate-400">{p.count}</span>
                   </div>
                   <span className="font-semibold text-slate-800 text-sm">{formatBRL(p.total)}</span>
                 </div>
@@ -145,18 +151,18 @@ export default function Overview({ expenses, profiles, budget, totalBRL, totalEU
       {/* Últimos gastos */}
       <div className="card">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="font-semibold text-slate-800">Últimos Gastos</h3>
+          <h3 className="font-semibold text-slate-800">{t('recentesTitle')}</h3>
           <button onClick={onViewAll} className="text-sm text-brand-600 hover:text-brand-700 font-medium">
-            Ver todos →
+            {t('verTodos')} →
           </button>
         </div>
 
         {recent.length === 0 ? (
           <div className="text-center py-10">
             <p className="text-4xl mb-3">✈️</p>
-            <p className="text-slate-500 font-medium mb-1">Nenhum gasto registrado ainda!</p>
-            <p className="text-slate-400 text-sm mb-4">Comece adicionando suas despesas da imigração</p>
-            <button onClick={onAddExpense} className="btn-primary">+ Adicionar primeiro gasto</button>
+            <p className="text-slate-500 font-medium mb-1">{t('naoHaGastos')}</p>
+            <p className="text-slate-400 text-sm mb-4">{t('adicionePrimeiro')}</p>
+            <button onClick={onAddExpense} className="btn-primary">+ {t('adicionarGasto')}</button>
           </div>
         ) : (
           <div className="space-y-2">
@@ -170,7 +176,7 @@ export default function Overview({ expenses, profiles, budget, totalBRL, totalEU
                   </div>
                   <div className="flex items-center gap-2 mt-0.5">
                     <span className={`text-xs ${PHASE_LABELS[e.phase]?.bg} ${PHASE_LABELS[e.phase]?.color} px-1.5 py-0.5 rounded`}>
-                      {PHASE_LABELS[e.phase]?.label}
+                      {phaseLabels[e.phase] || PHASE_LABELS[e.phase]?.label}
                     </span>
                     <span className="text-xs text-slate-400">{formatDate(e.date)}</span>
                     <span className="text-xs text-slate-400">· {e.profiles?.name}</span>

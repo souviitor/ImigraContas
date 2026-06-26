@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Category, ExpenseWithDetails } from '@/lib/types'
 import { PHASE_LABELS } from '@/lib/utils'
+import { useLanguage } from '@/lib/LanguageContext'
 
 type Props = {
   categories: Category[]
@@ -11,6 +12,7 @@ type Props = {
 }
 
 export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
+  const { t } = useLanguage()
   const [form, setForm] = useState({
     description: '',
     amount_brl: '',
@@ -30,7 +32,7 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!form.description.trim() || !form.category_id) {
-      setError('Preencha a descrição e categoria')
+      setError(t('erroDescricaoCategoria'))
       return
     }
 
@@ -39,7 +41,7 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
       : parseFloat(form.amount_eur)
 
     if (!amountValue || amountValue <= 0) {
-      setError('Digite um valor válido')
+      setError(t('erroValor'))
       return
     }
 
@@ -51,12 +53,19 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
     })
 
     if (err) {
-      setError('Erro ao salvar. Tente novamente.')
+      setError(t('erroSalvar'))
       setLoading(false)
     }
   }
 
   const set = (key: string, value: unknown) => setForm(f => ({ ...f, [key]: value }))
+
+  const phaseLabels: Record<string, string> = {
+    pre_viagem: t('preViagem'),
+    viagem: t('duranteViagem'),
+    chegada: t('chegada'),
+    pos_chegada: t('posChegada'),
+  }
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={e => e.target === e.currentTarget && onClose()}>
@@ -66,8 +75,8 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
           <div className="flex items-center gap-3">
             <div className="text-2xl">{selectedCategory?.icon || '💰'}</div>
             <div>
-              <h2 className="font-bold text-slate-800">Novo Gasto</h2>
-              <p className="text-sm text-slate-400">🇧🇷 → 🇪🇸 · Imigração</p>
+              <h2 className="font-bold text-slate-800">{t('novoGastoTitle')}</h2>
+              <p className="text-sm text-slate-400">{t('imigracao')}</p>
             </div>
           </div>
           <button onClick={onClose} className="text-slate-400 hover:text-slate-600 text-xl w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100">×</button>
@@ -76,12 +85,12 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* Descrição */}
           <div>
-            <label className="label">Descrição *</label>
+            <label className="label">{t('descricaoLabel')}</label>
             <input
               type="text"
               value={form.description}
               onChange={e => set('description', e.target.value)}
-              placeholder="Ex: Passagem aérea TAP Lisboa"
+              placeholder={t('descricaoPlaceholder')}
               className="input-field"
               required
               autoFocus
@@ -91,7 +100,7 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
           {/* Valor e moeda */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="label">Moeda</label>
+              <label className="label">{t('moeda')}</label>
               <div className="flex gap-2">
                 {(['BRL', 'EUR'] as const).map(curr => (
                   <button
@@ -111,7 +120,7 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
             </div>
 
             <div>
-              <label className="label">Valor *</label>
+              <label className="label">{t('valorLabel')}</label>
               <input
                 type="number"
                 step="0.01"
@@ -127,7 +136,7 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
 
           {/* Categoria */}
           <div>
-            <label className="label">Categoria *</label>
+            <label className="label">{t('categoriaLabel')}</label>
             <div className="grid grid-cols-3 gap-2 max-h-40 overflow-y-auto">
               {categories.map(c => (
                 <button
@@ -150,7 +159,7 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
           <div className="grid grid-cols-2 gap-3">
             {/* Data */}
             <div>
-              <label className="label">Data</label>
+              <label className="label">{t('data')}</label>
               <input
                 type="date"
                 value={form.date}
@@ -161,10 +170,10 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
 
             {/* Fase */}
             <div>
-              <label className="label">Fase</label>
+              <label className="label">{t('faseLabel')}</label>
               <select value={form.phase} onChange={e => set('phase', e.target.value)} className="input-field">
-                {Object.entries(PHASE_LABELS).map(([val, { label }]) => (
-                  <option key={val} value={val}>{label}</option>
+                {Object.keys(PHASE_LABELS).map(val => (
+                  <option key={val} value={val}>{phaseLabels[val]}</option>
                 ))}
               </select>
             </div>
@@ -180,17 +189,17 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
               className="w-4 h-4 rounded text-emerald-500"
             />
             <label htmlFor="is_dog" className="text-sm text-emerald-700 cursor-pointer font-medium">
-              🐕 Este gasto é relacionado ao cachorro
+              {t('eParaOAnimal')}
             </label>
           </div>
 
           {/* Notas */}
           <div>
-            <label className="label">Observações (opcional)</label>
+            <label className="label">{t('observacoes')}</label>
             <textarea
               value={form.notes}
               onChange={e => set('notes', e.target.value)}
-              placeholder="Detalhes adicionais..."
+              placeholder={t('obsPlaceholder')}
               className="input-field resize-none"
               rows={2}
             />
@@ -202,10 +211,10 @@ export default function AddExpenseModal({ categories, onClose, onAdd }: Props) {
 
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={onClose} className="flex-1 btn-secondary">
-              Cancelar
+              {t('cancelar')}
             </button>
             <button type="submit" disabled={loading} className="flex-1 btn-primary">
-              {loading ? '⏳ Salvando...' : '✅ Salvar Gasto'}
+              {loading ? `⏳ ${t('salvando')}` : `✅ ${t('salvar')}`}
             </button>
           </div>
         </form>

@@ -74,7 +74,7 @@ export default function LoginPage() {
         {/* Card */}
         <div className="bg-white/95 backdrop-blur rounded-2xl shadow-2xl p-8">
           <h2 className="text-xl font-semibold text-slate-800 mb-6">
-            {isSignUp ? 'Criar conta' : 'Entrar no sistema'}
+            {isSignUp ? 'Criar conta' : 'Acceder al Sistema'}
           </h2>
 
           <form onSubmit={handleAuth} className="space-y-4">
@@ -134,7 +134,7 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full btn-primary py-3 text-base"
             >
-              {loading ? '⏳ Aguarde...' : isSignUp ? '🚀 Criar conta' : '🔐 ORGANIZAR O NOSSO FUTURO'}
+              {loading ? '⏳ CARGANDO...' : isSignUp ? '🚀 Criar conta' : '🔐 ORGANIZAR NUESTRO FUTURO'}
             </button>
           </form>
 
