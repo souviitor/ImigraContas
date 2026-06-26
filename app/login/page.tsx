@@ -134,7 +134,7 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full btn-primary py-3 text-base"
             >
-              {loading ? '⏳ Aguarde...' : isSignUp ? '🚀 Criar conta' : '🔐 Entrar'}
+              {loading ? '⏳ Aguarde...' : isSignUp ? '🚀 Criar conta' : '🔐 ORGANIZAR O NOSSO FUTURO'}
             </button>
           </form>
 
@@ -144,8 +144,8 @@ export default function LoginPage() {
               className="text-sm text-brand-600 hover:text-brand-700 font-medium"
             >
               {isSignUp
-                ? '← Já tenho conta, quero entrar'
-                : 'CLIQUE AQUI PARA ORGANIZAR O NOSSO FUTURO!'}
+                ? '🚀'
+                : '🚀'}
             </button>
           </div>
 
