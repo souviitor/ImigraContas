@@ -144,14 +144,14 @@ export default function LoginPage() {
               className="text-sm text-brand-600 hover:text-brand-700 font-medium"
             >
               {isSignUp
-                ? '🚀'
-                : '🚀'}
+                ? '🚀 Não tenho conta → Criar conta'
+                : '🚀 Já tenho conta → Entrar'}
             </button>
           </div>
 
           {!isSignUp && (
             <p className="mt-4 text-xs text-slate-400 text-center">
-              💡 
+              💡 N᥆ tᥱ ρrᥱ᥆ᥴᥙρᥱ᥉, Dι᥆᥉ ᥒᥙᥒᥴᥲ ᥣᥣᥱgᥲ tᥲrdᥱ.
             </p>
           )}
         </div>
