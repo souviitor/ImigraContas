@@ -49,8 +49,8 @@ export default function Sidebar({
         <div className="flex items-center gap-3 mb-1">
           <span className="text-2xl">🛫</span>
           <div>
-            <h1 className="font-bold text-white text-base leading-tight">ImigraContas</h1>
-            <p className="text-slate-400 text-xs">🇧🇷 → 🇪🇸 + 🐕</p>
+            <h1 className="font-bold text-white text-base leading-tight">Rumbo +34</h1>
+            <p className="text-slate-400 text-xs">🇧🇷 → 🇪🇸</p>
           </div>
         </div>
       </div>
